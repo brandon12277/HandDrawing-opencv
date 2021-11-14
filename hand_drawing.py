@@ -16,9 +16,9 @@ class Hand_Drawing():
     def FindHands(self, frame):
         cvtrgb = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
         self.handstracked = self.hands.process(cvtrgb)
-        if self.handstracked.multi_hand_landmarks:
-            for hand_marks in self.handstracked.multi_hand_landmarks:
-                self.mpDraw.draw_landmarks(frame, hand_marks, self.mpHands.HAND_CONNECTIONS)
+        # if self.handstracked.multi_hand_landmarks:
+        #     for hand_marks in self.handstracked.multi_hand_landmarks:
+        #         self.mpDraw.draw_landmarks(frame, hand_marks, self.mpHands.HAND_CONNECTIONS)
         return frame
 
     def DisplayPoints(self, frame):
@@ -48,13 +48,13 @@ def main():
     while True:
         success, frame = cam.read()
         frame = drawer.FindHands(frame)
-        cv.rectangle(frame, (0, 0), (150, 50), (255, 255, 255),-1)
+        cv.rectangle(frame, (0, 0), (150, 50), (0, 0, 0),-1)
         cv.line(frame,(150,0),(150,50),(0,0,0),2)
-        cv.putText(frame,"Green",(75,25),cv.FONT_HERSHEY_PLAIN, 1,(0,0,0))
-        cv.rectangle(frame, (150, 0), (300, 50), (255, 255, 255),-1)
+        cv.putText(frame,"Black",(75,25),cv.FONT_HERSHEY_PLAIN, 1,(255,255,255))
+        cv.rectangle(frame, (150, 0), (300, 50), (255, 0, 0),-1)
         cv.line(frame, (300, 0), (300, 50), (0, 0, 0), 2)
         cv.putText(frame, "Blue", (200, 25), cv.FONT_HERSHEY_PLAIN, 1,(0,0,0))
-        cv.rectangle(frame, (300, 0), (450, 50), (255, 255, 255),-1)
+        cv.rectangle(frame, (300, 0), (450, 50), (0, 0, 255),-1)
         cv.line(frame, (450, 0), (450, 50), (0, 0, 0), 2)
         cv.putText(frame, "Red", (325, 25), cv.FONT_HERSHEY_PLAIN, 1,(0,0,0))
         cv.rectangle(frame, (450, 0), (640, 50), (255, 255, 255),-1)
@@ -64,15 +64,16 @@ def main():
             frame_count += 1
             for id,x,y in lmst:
                 if(id==8):
-                    cv.circle(frame,(x,y),10,(255,0,0),-1)
+                    cv.circle(frame,(x,y),10,color,-1)
                     if (x >= 0 and x <= 150 and y >= 0 and y <= 50):
-                        color = (0, 255, 0)
+                        color = (0, 0, 0)
                     if (x >= 150 and x <= 300 and y >= 0 and y <= 50):
                         color = (255, 0, 0)
                     if (x >= 300 and x <= 350 and y >= 0 and y <= 50):
                         color = (0, 0, 255)
                     if (x >= 450 and x <= 640 and y >= 0 and y <= 50):
                         drawing_points = []
+                        color=(0,0,0)
                     if(x>=0 and x<=640 and y>=0 and y<=50):
                         break
                     else:
